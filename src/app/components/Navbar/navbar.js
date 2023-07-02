@@ -20,7 +20,10 @@ function Navbar() {
                 </Link>
               </li>
               <li>
+                <Link href={"/pages/Admin"}>
+
                 <Button text={"Admin"} />
+                </Link>
               </li>
             </ul>
           </div>
