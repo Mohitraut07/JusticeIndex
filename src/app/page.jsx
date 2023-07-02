@@ -22,5 +22,5 @@ export default function Home() {
       <AboutProject />
       <Footer />
     </main>
-  );
+  )
 }
