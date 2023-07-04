@@ -1,9 +1,27 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Navbar from "@/app/components/Navbar/navbar";
 import Card from "@/app/components/Card";
 import Footer from "@/app/components/Footer/footer";
 
 function records() {
+  const [crimeData, setCrimeData] = React.useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      fetch("http://localhost:5000/criminals", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status) {
+            setCrimeData(data.crimeData);
+          }
+          // console.log(data);
+        });
+    };
+    getData();
+  }, []);
   return (
     <div>
       <Navbar />
@@ -13,12 +31,11 @@ function records() {
             Records
           </h1>
           <div className="flex flex-wrap justify-evenly items-stretch ">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+           
+
+            {
+              crimeData && crimeData.map((e)=><Card data ={e} />) 
+            }
           </div>
         </div>
       </div>
