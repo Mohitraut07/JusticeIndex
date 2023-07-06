@@ -19,6 +19,7 @@ const criminals = require('./api/Criminals.js');
 const addCriminal = require('./api/addCriminal.js');
 
 // using the routes
+
 app.use('/login',login)
 app.use('/topCriminals',topCriminals);
 app.use('/criminals',criminals);
