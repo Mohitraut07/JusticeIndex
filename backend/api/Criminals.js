@@ -9,6 +9,7 @@ require('dotenv').config();
 const client = new MongoClient(process.env.DB_ADD);
 
 // Route to Data of all Criminals
+
 router.get('/', async (req, res) => {
    try {
       // Connection Request to Mongodb
