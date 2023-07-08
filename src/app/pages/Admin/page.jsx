@@ -1,9 +1,11 @@
 "use client"
 import React from "react";
 import Navbar from "@/app/components/Navbar";
+import { useRouter } from "next/navigation";
 
 function Login() {
-  const [formData, setFormData] = React.useState({username:"",password:""});
+  const router = useRouter();
+  const [formData, setFormData] = React.useState({username:'',password:''});
   const handleSubmit = async (e) => {
     e.preventDefault();
     fetch("http://localhost:5000/login", {
@@ -13,7 +15,10 @@ function Login() {
         },
       body: JSON.stringify(formData),
     }).then((res) => res.json())
-    .then((data) => {console.log(data);})
+    .then((data) => {console.log(data);
+      if(data.status ){
+        router.push("/pages/Dashboard");
+      }})
     .catch((err) => {
       console.log(err);
     });
@@ -29,9 +34,12 @@ function Login() {
           <form  method="get" className="flex flex-col gap-4">
             <input
               type="text"
-              name="adminUsername"
+              name="username"
+              id="username"
               placeholder="Username"
-              onChange={(e) => setFormData({...formData,username:e.target.value})}
+              onChange={(e) => {setFormData({...formData,username:e.target.value}); 
+
+            } }
               required
               className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none"
             />
