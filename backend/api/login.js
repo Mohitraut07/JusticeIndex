@@ -1,15 +1,36 @@
 const express = require('express')
 const router = express.Router();
-require('dotenv').config()
+const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
-router.post("/", (req, res) => {
-   let { username, password } = req.body;
-   if (username === process.env.USER && password === process.env.PASSWORD) {
-      res.json({ status: true, msg: "Login Successful" })
+const client = new MongoClient(process.env.DB_ADD);
+
+router.post("/", async (req, res) => {
+   const { username, password } = req.body;
+   try{
+      await client.connect();
+      const db = client.db('MiniProjectDBMS');
+      const result = await db.collection('CriminalDetails').find({username
+      }).toArray();
+
+      if(result.password===password){
+
+            res.json({ status: true, msg: "Login Successful" })
+      }
+      else {
+         res.json({ status: false, msg: "Login Failed" })
+      }
    }
-   else {
-      res.json({ status: false, msg: "Login Failed" })
+   catch (err) {
+      console.log(err)
+      res.status(500)
    }
+   // if (username === process.env.USER && password === process.env.PASSWORD) {
+   //    res.json({ status: true, msg: "Login Successful" })
+   // }
+   // else {
+   //    res.json({ status: false, msg: "Login Failed" })
+   // }
 
 })
 

@@ -1,24 +1,36 @@
-"use client"
-import React,{useState,useEffect} from "react";
+"use client";
+import React, { useRef, useEffect } from "react";
 import Card from "../Card";
 
 function Records() {
   const [crimeData, setCrimeData] = React.useState([]);
-
+  
+  const [isRender,setIsRender] = React.useState(false);
   useEffect(() => {
     const getData = async () => {
-      fetch("http://localhost:5000/criminals", {
+      fetch("https://justice-index.vercel.app/criminals", {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
         .then((res) => res.json())
         .then((data) => {
           if (data.status) {
             setCrimeData(data.crimeData);
+          } else {
+            console.log("error");
           }
           // console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-    };
-    getData();
+      };
+      if(!isRender)
+        getData();
+      else 
+        setIsRender(true);
   }, []);
   return (
     <div className="container overflow-hidden flex justify-center align-middle bg-gradient-to-r from-[rgb(0,0,0,.8)] to-[rgb(255,255,255,.3)]">
@@ -27,7 +39,7 @@ function Records() {
           Records
         </h1>
         <div className="flex flex-wrap justify-evenly items-stretch ">
-          {crimeData && crimeData.map((e) => <Card data={e} />)}
+          {crimeData && crimeData.map((e) => <Card key = {e._id} data={e} />)}
         </div>
       </div>
     </div>

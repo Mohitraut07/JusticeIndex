@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import Navbar from "@/app/components/Navbar/navbar";
+import Navbar from "@/app/components/Navbar";
 import Card from "@/app/components/Card";
 import Footer from "@/app/components/Footer/footer";
 
@@ -9,7 +9,7 @@ function records() {
 
   useEffect(() => {
     const getData = async () => {
-      fetch("http://localhost:5000/criminals", {
+      fetch("https://justice-index.vercel.app/criminals", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -31,11 +31,10 @@ function records() {
             Records
           </h1>
           <div className="flex flex-wrap justify-evenly items-stretch ">
-           
-
-            {
-              crimeData && crimeData.map((e)=><Card data ={e} />) 
-            }
+            {crimeData &&
+              crimeData.map((e, index) => (
+                <Card data={e} i={index} homePage={false} />
+              ))}
           </div>
         </div>
       </div>
