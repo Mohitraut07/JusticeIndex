@@ -9,7 +9,7 @@ function records() {
 
   useEffect(() => {
     const getData = async () => {
-      fetch("https://justice-index.vercel.app/criminals", {
+      fetch("https://justice-index.vercel.app/topCriminals", {
         method: "GET",
       })
         .then((res) => res.json())

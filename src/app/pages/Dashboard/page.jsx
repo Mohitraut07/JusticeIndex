@@ -22,7 +22,7 @@ function Dashboard() {
     console.log(array);
     formData.location = array;
 
-    fetch("http://localhost:5000/addCriminal", {
+    fetch("https://justice-index.vercel.app/addCriminal", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

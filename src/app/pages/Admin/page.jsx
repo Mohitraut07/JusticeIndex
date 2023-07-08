@@ -8,7 +8,7 @@ function Login() {
   const [formData, setFormData] = React.useState({username:'',password:''});
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/login", {
+    fetch("https://justice-index.vercel.app/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
