@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Section from "./components/Section";
 import AboutProject from "./components/AboutProject";
 import Footer from "./components/Footer/footer";
+import { ToastContainer, toast } from "react-toastify";
 import Records from "./components/Records";
 import Sec from "./components/Sec";
 

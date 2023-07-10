@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 function Dashboard() {
   const [city, setCity] = React.useState("");
@@ -32,7 +33,17 @@ function Dashboard() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          alert("Data Added Successfully");
+          // alert("Data Added Successfully");
+          toast.success("Data Added Successfully", {
+            position: "top-center",
+            autoClose: 5000,  
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+      
+          
           setFormData({
             criminalName: "",
             criminalAge: "",
@@ -47,15 +58,29 @@ function Dashboard() {
           });
           setCity("");
           setCountry("");
+        } else {
+          toast.error("Error in adding data", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         }
-
-        console.log(data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Server Error", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       });
-    console.log(formData);
   };
+
 
   return (
     <div className="bg-cover bg-center bg-fixed bg-no-repeat">
@@ -346,6 +371,7 @@ function Dashboard() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
