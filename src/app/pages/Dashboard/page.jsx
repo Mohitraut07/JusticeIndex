@@ -1,10 +1,13 @@
 "use client";
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useContext } from "react";
+import { VerifiedContext } from "@/app/layout";
 
 function Dashboard() {
   const [city, setCity] = React.useState("");
   const [country, setCountry] = React.useState("");
+  const { isVerify, setIsVerify } = useContext(VerifiedContext);
   const [formData, setFormData] = React.useState({
     criminalName: "",
     criminalAge: "",
@@ -36,14 +39,13 @@ function Dashboard() {
           // alert("Data Added Successfully");
           toast.success("Data Added Successfully", {
             position: "top-center",
-            autoClose: 5000,  
+            autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
           });
-      
-          
+
           setFormData({
             criminalName: "",
             criminalAge: "",
@@ -80,7 +82,17 @@ function Dashboard() {
         });
       });
   };
-
+  if (!isVerify) {
+    return (
+      <>
+        <div className="flex">
+          <h1 className="text-3xl justify-center items-center">
+            You are not Allowed!!!
+          </h1>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div className="bg-cover bg-center bg-fixed bg-no-repeat">

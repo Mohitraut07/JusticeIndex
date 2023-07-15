@@ -2,10 +2,13 @@
 import React from "react";
 import Navbar from "@/app/components/Navbar";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { VerifiedContext } from "@/app/layout";
 
-function Login() {
+function Login({setVerify}) {
   const router = useRouter();
   const [formData, setFormData] = React.useState({username:'',password:''});
+  const { isVerify, setIsVerify } = useContext(VerifiedContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     fetch("https://justice-index.vercel.app/login", {
@@ -17,6 +20,7 @@ function Login() {
     }).then((res) => res.json())
     .then((data) => {console.log(data);
       if(data.status ){
+        setIsVerify(true);
         router.push("/pages/Dashboard");
       }})
     .catch((err) => {

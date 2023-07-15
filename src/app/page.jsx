@@ -8,6 +8,7 @@ import Records from "./components/Records";
 import Sec from "./components/Sec";
 
 export default function Home() {
+  
   return (
     <main>
       <div className="mb-10">
