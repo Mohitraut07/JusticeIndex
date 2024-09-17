@@ -4,38 +4,22 @@ import Button from "../Button";
 import Link from "next/link";
 
 function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(true);
-  console.log(isMenuOpen);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
     <>
-      <div className="header h-20 bg-[#FFF8F8] rounded-b-3xl relative">
+      <header className="h-20 bg-[#FFF8F8] md:rounded-b-3xl relative z-50 shadow-md">
         <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
-    {
-      isMenuOpen && (
-        <div className="header__menu h-50 w-[85%] rounded-b-3xl  justify-center flex sm:hidden absolute left-10 mt-90 bg-gray-400 top-20 ">
-        
-        <ul className="flex-col top-5">
-          <li>
-            <Link href={"/pages/Record"}>
-              <Button text={"Records"} />
-            </Link>
-          </li>
-          <li>
-            <Link href={"/pages/Admin"}>
-              <Button text={"Admin"} />
-            </Link>
-          </li>
-        </ul>
-      </div>
-      )
-    }
+          {/* Logo */}
           <div className="header__logo">
             <Link href={"/"}>
               <Button text={"JusticeIndex"} />
             </Link>
           </div>
-          <div className="header__menu hidden sm:block">
-            <ul className="flex space-x-4">
+
+          {/* Desktop Menu */}
+          <div className="hidden sm:block">
+            <ul className="flex space-x-6">
               <li>
                 <Link href={"/pages/Record"}>
                   <Button text={"Records"} />
@@ -48,14 +32,34 @@ function Navbar() {
               </li>
             </ul>
           </div>
-          <div className="header__menu sm:hidden">
+
+          {/* Mobile Menu Toggle Button */}
+          <div className="sm:hidden">
             <Button
-              text={"Menu"}
+              text={isMenuOpen ? "Close" : "Menu"}
               func={() => setIsMenuOpen(!isMenuOpen)}
-                            />
+            />
           </div>
         </div>
-      </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="absolute w-full top-full bg-[#FFF8F8] rounded-b-3xl py-4 shadow-lg z-40 flex justify-center">
+            <ul className="flex flex-col items-center space-y-4">
+              <li>
+                <Link href={"/pages/Record"}>
+                  <Button text={"Records"} />
+                </Link>
+              </li>
+              <li>
+                <Link href={"/pages/Admin"}>
+                  <Button text={"Admin"} />
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
+      </header>
     </>
   );
 }
