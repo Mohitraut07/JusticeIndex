@@ -4,8 +4,9 @@ import Navbar from "@/app/components/Navbar";
 import Card from "@/app/components/Card";
 import Footer from "@/app/components/Footer/footer";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Ensure styling for the toast
 
-function records() {
+function Records() {
   const [crimeData, setCrimeData] = React.useState([]);
 
   useEffect(() => {
@@ -41,26 +42,57 @@ function records() {
     };
     getData();
   }, []);
+
   return (
-    <div>
+    <div className="min-h-screen flex flex-col justify-between">
+      {/* Navbar */}
       <Navbar />
-      <div className="container  flex justify-center align-middle bg-gradient-to-r from-[rgb(0,0,0,.8)] to-[rgb(255,255,255,.3)]">
-        <div className="heading sm:h-full sm:w-[80%] bg-white text-black rounded-xl m-5 ">
-          <h1 className="font-semibold text-3xl text-[#A04646] my-4 px-5">
-            Records
-          </h1>
-          <div className="flex flex-wrap justify-evenly items-stretch ">
-            {crimeData &&
+
+      {/* Hero Section */}
+      <div className="relative w-full h-[30vh] bg-cover bg-center bg-[url('/path-to-your-background-image.jpg')] flex justify-center items-center">
+        <h1 className="text-5xl text-white font-bold drop-shadow-lg">
+          Crime Records
+        </h1>
+      </div>
+
+      {/* Records Section */}
+      <div className="container mx-auto py-10">
+        <div className="bg-white bg-opacity-80 rounded-xl shadow-lg p-6">
+          <h2 className="text-3xl text-center text-gray-800 font-semibold mb-8">
+            Top Criminal Records
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {crimeData.length > 0 ? (
               crimeData.map((e, index) => (
-                <Card data={e} i={index} homePage={false} />
-              ))}
+                <Card key={index} data={e} i={index} homePage={false} />
+              ))
+            ) : (
+              <p className="text-center text-gray-500 col-span-full">
+                No records found
+              </p>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Footer */}
       <Footer />
-      <ToastContainer />
+
+      {/* Toast Notifications */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
 
-export default records;
+export default Records;
