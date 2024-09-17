@@ -8,7 +8,7 @@ import Sec from "./components/Sec";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-gradient-to-r from-gray-900  to-black">
       <div className="mb-10">
         <Navbar />
       </div>

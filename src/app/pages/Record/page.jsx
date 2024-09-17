@@ -44,7 +44,7 @@ function Records() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-r from-gray-800 via-gray-900 to-black">
       {/* Navbar */}
       <Navbar />
 
