@@ -3,6 +3,7 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useContext } from "react";
 import { VerifiedContext } from "@/app/layout";
+import "react-toastify/dist/ReactToastify.css";
 
 function Dashboard() {
   const [city, setCity] = React.useState("");
@@ -20,10 +21,10 @@ function Dashboard() {
     criminalGender: "",
     victimGender: "",
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const array = [city, country];
-    console.log(array);
     formData.location = array;
 
     fetch("https://justice-index.vercel.app/addCriminal", {
@@ -36,7 +37,6 @@ function Dashboard() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          // alert("Data Added Successfully");
           toast.success("Data Added Successfully", {
             position: "top-center",
             autoClose: 5000,
@@ -45,7 +45,6 @@ function Dashboard() {
             pauseOnHover: true,
             draggable: true,
           });
-
           setFormData({
             criminalName: "",
             criminalAge: "",
@@ -82,30 +81,34 @@ function Dashboard() {
         });
       });
   };
+
   if (!isVerify) {
     return (
-      <>
-        <div className="flex">
-          <h1 className="text-3xl justify-center items-center">
-            You are not Allowed!!!
-          </h1>
-        </div>
-      </>
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-3xl font-semibold text-red-600">Access Denied</h1>
+      </div>
     );
   }
 
   return (
-    <div className="bg-cover bg-center bg-fixed bg-no-repeat">
-      <div className="container py-10 px-20 md:px-40 lg:px-150 mt-8 mb-4 rounded-lg bg-slate-950 bg-opacity-75 flex flex-col items-center">
-        <div className="addData text-2xl font-semibold pb-5">Add Data</div>
-        <form method="post" className="flex flex-col items-center gap-5 ">
-          <div className="detailContainer flex flex-col md:flex-row gap-10 py-5">
-            <div className="Details flex flex-col items-center gap-6">
-              <div className="heading font-semibold text-lg">
-                Criminal Details
-              </div>
-              <div className="info flex flex-col items-center">
-                <label for="criminalName" className="text-base font-semibold">
+    <div className="bg-gradient-to-r from-gray-800 to-gray-900 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl w-full space-y-8 bg-gray-900 bg-opacity-90 p-8 rounded-lg shadow-xl">
+        <div className="text-center text-3xl font-semibold text-white">
+          Add Criminal Incident Data
+        </div>
+        <form
+          method="post"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          onSubmit={handleSubmit}
+        >
+          {/* Criminal Details */}
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <div className="heading text-xl font-bold text-white mb-4">
+              Criminal Details
+            </div>
+            <div className="space-y-4">
+              <div className="info">
+                <label htmlFor="criminalName" className="block text-white">
                   Criminal Name
                 </label>
                 <input
@@ -113,15 +116,15 @@ function Dashboard() {
                   name="Criminalname"
                   id="criminalName"
                   value={formData.criminalName}
-                  onChange={(e) => {
-                    setFormData({ ...formData, criminalName: e.target.value });
-                  }}
+                  onChange={(e) =>
+                    setFormData({ ...formData, criminalName: e.target.value })
+                  }
                   required
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="criminalAge" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="criminalAge" className="block text-white">
                   Criminal Age
                 </label>
                 <input
@@ -129,79 +132,77 @@ function Dashboard() {
                   name="Criminalage"
                   id="criminalAge"
                   value={formData.criminalAge}
-                  onChange={(e) => {
-                    setFormData({ ...formData, criminalAge: e.target.value });
-                  }}
+                  onChange={(e) =>
+                    setFormData({ ...formData, criminalAge: e.target.value })
+                  }
                   required
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="criminalGender" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="criminalGender" className="block text-white">
                   Criminal Gender
                 </label>
-                <div className="flex">
-                  <input
-                    type="radio"
-                    name="Gender"
-                    id="criminalGenderM"
-                    value="Male"
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        criminalGender: e.target.value,
-                      });
-                    }}
-                    className="mr-1"
-                  />
-                  <label
-                    for="criminalGenderM"
-                    className="text-base font-normal"
-                  >
+                <div className="flex items-center space-x-4">
+                  <label className="text-white">
+                    <input
+                      type="radio"
+                      name="Gender"
+                      value="Male"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          criminalGender: e.target.value,
+                        })
+                      }
+                      className="mr-2"
+                    />
                     Male
                   </label>
-                  <input
-                    type="radio"
-                    name="Gender"
-                    id="criminalGenderF"
-                    value="Female"
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        criminalGender: e.target.value,
-                      });
-                    }}
-                    className="ml-4"
-                  />
-                  <label
-                    for="criminalGenderF"
-                    className="text-base font-normal"
-                  >
+                  <label className="text-white">
+                    <input
+                      type="radio"
+                      name="Gender"
+                      value="Female"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          criminalGender: e.target.value,
+                        })
+                      }
+                      className="mr-2"
+                    />
                     Female
                   </label>
                 </div>
               </div>
             </div>
-            <div className="Details flex flex-col items-center gap-6">
-              <div className="heading font-semibold text-lg">Crime Details</div>
-              <div className="info flex flex-col items-center">
-                <label for="type" className="text-base font-semibold">
+          </div>
+
+          {/* Crime Details */}
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <div className="heading text-xl font-bold text-white mb-4">
+              Crime Details
+            </div>
+            <div className="space-y-4">
+              <div className="info">
+                <label htmlFor="crimeType" className="block text-white">
                   Crime Type
                 </label>
                 <input
                   type="text"
                   name="cType"
-                  id="type"
+                  id="crimeType"
                   value={formData.crimeType}
-                  onChange={(e) => {
-                    setFormData({ ...formData, crimeType: e.target.value });
-                  }}
+                  onChange={(e) =>
+                    setFormData({ ...formData, crimeType: e.target.value })
+                  }
                   required
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="location" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="location" className="block text-white">
                   Location
                 </label>
                 <input
@@ -209,28 +210,24 @@ function Dashboard() {
                   name="city"
                   id="city"
                   value={city}
-                  onChange={(e) => {
-                    setCity(e.target.value);
-                  }}
+                  onChange={(e) => setCity(e.target.value)}
                   required
                   placeholder="City"
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 mb-2"
                 />
                 <input
                   type="text"
                   name="country"
                   id="country"
                   value={country}
-                  onChange={(e) => {
-                    setCountry(e.target.value);
-                  }}
+                  onChange={(e) => setCountry(e.target.value)}
                   required
                   placeholder="Country"
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none mt-2 text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="date" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="date" className="block text-white">
                   Date
                 </label>
                 <input
@@ -238,39 +235,43 @@ function Dashboard() {
                   name="Date"
                   id="date"
                   value={formData.date}
-                  onChange={(e) => {
-                    setFormData({ ...formData, date: e.target.value });
-                  }}
+                  onChange={(e) =>
+                    setFormData({ ...formData, date: e.target.value })
+                  }
                   required
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="reportedTo" className="text-base font-semibold">
-                  Reported to
+              <div className="info">
+                <label htmlFor="reportedTo" className="block text-white">
+                  Reported To
                 </label>
                 <input
                   type="text"
                   name="Reportedto"
                   id="reportedTo"
                   value={formData.crimeReportedTo}
-                  onChange={(e) => {
+                  onChange={(e) =>
                     setFormData({
                       ...formData,
                       crimeReportedTo: e.target.value,
-                    });
-                  }}
+                    })
+                  }
                   required
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
-            <div className="Details flex flex-col items-center gap-6">
-              <div className="heading font-semibold text-lg">
-                Victim Details
-              </div>
-              <div className="info flex flex-col items-center">
-                <label for="victimNumber" className="text-base font-semibold">
+          </div>
+
+          {/* Victim Details */}
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <div className="heading text-xl font-bold text-white mb-4">
+              Victim Details
+            </div>
+            <div className="space-y-4">
+              <div className="info">
+                <label htmlFor="victimNumber" className="block text-white">
                   Number of Victims
                 </label>
                 <input
@@ -278,15 +279,15 @@ function Dashboard() {
                   name="Victimnumber"
                   id="victimNumber"
                   value={formData.victimNumber}
-                  onChange={(e) => {
-                    setFormData({ ...formData, victimNumber: e.target.value });
-                  }}
+                  onChange={(e) =>
+                    setFormData({ ...formData, victimNumber: e.target.value })
+                  }
                   required
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="victimAge" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="victimAge" className="block text-white">
                   Victim Age
                 </label>
                 <input
@@ -294,92 +295,86 @@ function Dashboard() {
                   name="Victimage"
                   id="victimAge"
                   value={formData.victimAge}
+                  onChange={(e) =>
+                    setFormData({ ...formData, victimAge: e.target.value })
+                  }
                   required
-                  onChange={(e) => {
-                    setFormData({ ...formData, victimAge: e.target.value });
-                  }}
-                  className="px-4 py-2 border-2 border-gray-400 rounded-md text-base outline-none text-black"
+                  className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="victimGender" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="victimGender" className="block text-white">
                   Victim Gender
                 </label>
-                <div className="flex">
-                  <input
-                    type="radio"
-                    name="Gender"
-                    id="victimGenderM"
-                    value="Male"
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        victimGender: e.target.value,
-                      });
-                    }}
-                    className="mr-1"
-                  />
-                  <label for="victimGenderM" className="text-base font-normal">
+                <div className="flex items-center space-x-4">
+                  <label className="text-white">
+                    <input
+                      type="radio"
+                      name="Gender"
+                      value="Male"
+                      onChange={(e) =>
+                        setFormData({ ...formData, victimGender: e.target.value })
+                      }
+                      className="mr-2"
+                    />
                     Male
                   </label>
-                  <input
-                    type="radio"
-                    name="Gender"
-                    id="victimGenderF"
-                    value="Female"
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        victimGender: e.target.value,
-                      });
-                    }}
-                    className="ml-4"
-                  />
-                  <label for="victimGenderF" className="text-base font-normal">
+                  <label className="text-white">
+                    <input
+                      type="radio"
+                      name="Gender"
+                      value="Female"
+                      onChange={(e) =>
+                        setFormData({ ...formData, victimGender: e.target.value })
+                      }
+                      className="mr-2"
+                    />
                     Female
                   </label>
                 </div>
               </div>
-              <div className="info flex flex-col items-center">
-                <label for="murder" className="text-base font-semibold">
+              <div className="info">
+                <label htmlFor="murderFlag" className="block text-white">
                   Murder Flag
                 </label>
-                <div className="flex">
-                  <input
-                    type="radio"
-                    name="murder"
-                    id="murderY"
-                    onChange={(e) => {
-                      setFormData({ ...formData, murderFlag: e.target.value });
-                    }}
-                    className="mr-1"
-                  />
-                  <label for="murderY" className="text-base font-normal">
+                <div className="flex items-center space-x-4">
+                  <label className="text-white">
+                    <input
+                      type="radio"
+                      name="murder"
+                      value="Yes"
+                      onChange={(e) =>
+                        setFormData({ ...formData, murderFlag: e.target.value })
+                      }
+                      className="mr-2"
+                    />
                     Yes
                   </label>
-                  <input
-                    type="radio"
-                    name="murder"
-                    id="murderN"
-                    onChange={(e) => {
-                      setFormData({ ...formData, murderFlag: e.target.value });
-                    }}
-                    className="ml-4"
-                  />
-                  <label for="murderN" className="text-base font-normal">
+                  <label className="text-white">
+                    <input
+                      type="radio"
+                      name="murder"
+                      value="No"
+                      onChange={(e) =>
+                        setFormData({ ...formData, murderFlag: e.target.value })
+                      }
+                      className="mr-2"
+                    />
                     No
                   </label>
                 </div>
               </div>
             </div>
           </div>
-          <div className="submit">
-            <input
+
+          {/* Submit Button */}
+          <div className="col-span-1 md:col-span-3 text-center">
+            <button
               type="submit"
-              value="Add Incident"
-              onClick={handleSubmit}
-              className="w-full md:w-auto h-12 px-8 bg-red-200 hover:bg-red-600 hover:text-white active:bg-red-900 text-lg font-semibold rounded-md cursor-pointer"
-            />
+              className="w-full md:w-1/2 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition duration-300"
+            >
+              Add Incident
+            </button>
           </div>
         </form>
       </div>
