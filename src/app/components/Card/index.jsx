@@ -3,7 +3,7 @@ import Button from "../Button";
 import CardDescription from "../CardDescription";
 
 function Card({data}) {
-  console.log(data);
+  // console.log(data);
   const [isOpened, setIsOpened] = React.useState(false);
 
   
@@ -12,7 +12,7 @@ function Card({data}) {
       {isOpened ? <CardDescription isOpened={isOpened} data={data} setIsOpened={setIsOpened}/>:null}
       <div className="m-10 max-w-xs max-h-96 bg-white shadow-md rounded-lg overflow-hidden">
         <div className="image ">
-          <img src="/logo.jpg" alt="Avatar" className="w-80 h-40 object-contain" />
+          <img src="/logo.jpg" alt="Avatar" className="w-80 h-40 object-contain rounded-full" />
         </div>
         <div className="p-4">
           <h2 className="text-xl text-gray-600 font-bold mb-2 truncate">
